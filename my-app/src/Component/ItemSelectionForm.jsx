@@ -68,7 +68,7 @@ function ItemSelectionForm() {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="item-input">Enter or search for an item:</label>
+        <label htmlFor="item-input">Enter or search for an item:  </label>
         <input
           type="text"
           id="item-input"
@@ -87,6 +87,7 @@ function ItemSelectionForm() {
             ))}
         </datalist>
       </div>
+      <br/>
       <button type="submit">Submit</button>
     </form>
   );
