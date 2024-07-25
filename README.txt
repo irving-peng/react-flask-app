@@ -1,3 +1,13 @@
+package, library, and dependencies listed in requirement.txt
+
+For creating virtual environment on windows:
+    python -m venv venv
+For activate virtual environment:
+    venv/Scripts/activate
+For deactivate:
+    deactivate
+
+
 For Deployment to Heroku:
     1. heroku login
     2. git init
