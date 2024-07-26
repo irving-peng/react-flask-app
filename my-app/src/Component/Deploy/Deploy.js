@@ -5,3 +5,4 @@ import React from 'react'
             <h1>{prop.tutorial}</h1>
             </div>)
 }
+export default Deploy

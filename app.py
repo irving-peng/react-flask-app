@@ -24,11 +24,12 @@ price_table = None
 rate_table = None
 # used to check if data is avaliable for market
 have_mdata = True
+have_pdata = True
 @app.route('/api', methods=['GET'])
 @cross_origin()
 def index():
     return {
-        "tutorial" : "Bosda Sales"
+        "tutorial" : "Sales Trend Visualization"
     }
 
 @app.route('/')
@@ -45,6 +46,7 @@ def submit_item():
     global price_table
     global rate_table
     global have_mdata
+    global have_pdata
     data = request.get_json()
     item = data.get('item')
     # Process the item as needed
@@ -81,29 +83,31 @@ def submit_item():
                 yearly_total[year] = quantity
             else:
                 yearly_total[year] += quantity 
+        years = list(yearly_total.keys())
+        # creating the prediction of all total demand in the after-market (2010 -> 2027)
+        scrappage_rate = 0.05
+        after_market = {}
+        for current_year in range(years[0]+3,years[len(years)-1]+14,1):
+            # check year that are in the after-market
+            start_year = current_year -13
+            end_year = current_year -3
+            if(start_year < years[0]):
+                start_year = years[0]
+            year_included = years[start_year -years[0]:end_year-years[0]+1]
+            #### calculate total up to current year###
+            total = 0
+            for year in year_included:
+                total += yearly_total[year] *0.95**(current_year-(year+3)+1) ## 0.95 should be multiply extra n times for extra n years after 2010, 2010 is 1 time
+            after_market[current_year] = int(total)
+        # turn the dictionary into a df
+        market_table = pd.DataFrame(after_market.items(), columns=['Year', 'Qty'])
     else:
         #generate a dictionary with 0s from start year of sales table to 2024
         have_mdata = False # set this to false
         start_year = sale_table.iloc[0]['Year']
-        yearly_total = {year: 0 for year in range(start_year, 2025)}
-    years = list(yearly_total.keys())
-    # creating the prediction of all total demand in the after-market (2010 -> 2027)
-    scrappage_rate = 0.05
-    after_market = {}
-    for current_year in range(years[0]+3,years[len(years)-1]+14,1):
-        # check year that are in the after-market
-        start_year = current_year -13
-        end_year = current_year -3
-        if(start_year < years[0]):
-            start_year = years[0]
-        year_included = years[start_year -years[0]:end_year-years[0]+1]
-        #### calculate total up to current year###
-        total = 0
-        for year in year_included:
-            total += yearly_total[year] *0.95**(current_year-(year+3)+1) ## 0.95 should be multiply extra n times for extra n years after 2010, 2010 is 1 time
-        after_market[current_year] = int(total)
-    # turn the dictionary into a df
-    market_table = pd.DataFrame(after_market.items(), columns=['Year', 'Qty'])
+        years =  range(start_year, 2024)# should be creating a df of the same length as sales_table
+        d = {'Year':years, 'Qty': np.ones(len(years))}
+        market_table = pd.DataFrame(data=d)
     # remove the row prior to the start year of sale_table
     start_year = sale_table.iloc[0]['Year']
     remove_year = []
@@ -124,9 +128,15 @@ def submit_item():
     itemID = [stored_item] #input the item id you want to search
     mask = df['ItemID'].isin(itemID)
     filtered_item = df[mask]
-    filtered_item
-    price_table = filtered_item.groupby(filtered_item.Date.dt.year)['Price'].mean().round(0)
-    price_table = pd.DataFrame({'Year':price_table.index.astype(int), 'Price': price_table.values.astype(int)})
+    if not filtered_item.empty:
+        have_pdata = True # set this to True
+        price_table = filtered_item.groupby(filtered_item.Date.dt.year)['Price'].mean().round(0)
+        price_table = pd.DataFrame({'Year':price_table.index.astype(int), 'Price': price_table.values.astype(int)})
+    else:
+        have_pdata = False
+        years =  range(start_year, 2024)# should be creating a df of the same length as sales_table
+        d = {'Year':years, 'Price': np.ones(len(years))}
+        price_table = pd.DataFrame(data=d)
     # remove the row prior to the start year of sale_table
     start_year = sale_table.iloc[0]['Year']
     remove_year = []
@@ -196,15 +206,20 @@ def sales_plot():
     global sale_table
     if stored_item == None:
         return None
+    plt.figure(figsize=(20, 10))  # Set figure size
     sale_table['Qty'].plot(legend = True, label = 'Qty', title = \
         "Sales By Year", style = '-', linewidth = 2.5, fontsize=15,figsize=(20, 10))
     # naming the x and y axis
     plt.xlabel('Year', fontsize=15)
     plt.ylabel('Qty', fontsize=15)
     plt.xticks(sale_table.index,sale_table["Year"].values)
-     # Save the plot to a BytesIO object
+    
+    # Adjust layout
+    plt.tight_layout()
+
+    # Save the plot to a BytesIO object
     img = io.BytesIO()
-    plt.savefig(img, format='png')
+    plt.savefig(img, format='png', bbox_inches='tight')
     img.seek(0)
     plt.close()
     # Return the image file
@@ -220,15 +235,19 @@ def market_plot():
         return jsonify({'status': 'error', 'message': 'No item found'}), 404
     if not have_mdata:
         return jsonify({'status': 'error', 'message': 'No Data Found'}), 404
+    plt.figure(figsize=(20, 10))  # Set figure size
     market_table['Qty'].plot(legend = True, label = 'Qty', title = \
         "Market Demand by year", style = '-', linewidth = 2.5, fontsize=15,figsize=(20, 10))
     # naming the x and y axis
     plt.xlabel('Year', fontsize=15)
     plt.ylabel('Qty', fontsize=15)
     plt.xticks(market_table.index,market_table["Year"].values)
+    # Adjust layout
+    plt.tight_layout()
+
     # Save the plot to a BytesIO object
     img = io.BytesIO()
-    plt.savefig(img, format='png')
+    plt.savefig(img, format='png', bbox_inches='tight')
     img.seek(0)
     plt.close()
     # Return the image file
@@ -238,18 +257,25 @@ def market_plot():
 def price_plot():   
     global price_table
     global stored_item
+    print("price table", price_table)
     if stored_item == None:
         return None
-     # plotting 
+    if not have_pdata:
+        return jsonify({'status': 'error', 'message': 'No Data Found'}), 404
+     # plotting
+    plt.figure(figsize=(20, 10))  # Set figure size
     price_table['Price'].plot(legend = True, label = 'Price', title = \
       "Sale price by year", style = '-', linewidth = 2.5, fontsize=15,figsize=(20, 10))
     # naming the x and y axis
     plt.xlabel('Year', fontsize=15)
     plt.ylabel('Price', fontsize=15)
     plt.xticks(price_table.index,price_table["Year"].values)
+    # Adjust layout
+    plt.tight_layout()
+
     # Save the plot to a BytesIO object
     img = io.BytesIO()
-    plt.savefig(img, format='png')
+    plt.savefig(img, format='png', bbox_inches='tight')
     img.seek(0)
     plt.close()
     # Return the image file
@@ -263,15 +289,19 @@ def rate_plot():
         return jsonify({'status': 'error', 'message': 'No Item Found'}), 404
     if not have_mdata:
         return jsonify({'status': 'error', 'message': 'No Data Found'}), 404
+    plt.figure(figsize=(20, 10))  # Set figure size
     rate_table['Qty'].plot(legend = True, label = 'Market-Share-Rate', title = \
         "sales: market share rate", style = '-', linewidth = 2.5, fontsize=15,figsize=(20, 10))
     # naming the x and y axis
     plt.xlabel('Year', fontsize=15)
     plt.ylabel('Rate', fontsize=15)
     plt.xticks(rate_table.index,rate_table["Year"].values)
+    # Adjust layout
+    plt.tight_layout()
+
     # Save the plot to a BytesIO object
     img = io.BytesIO()
-    plt.savefig(img, format='png')
+    plt.savefig(img, format='png', bbox_inches='tight')
     img.seek(0)
     plt.close()
     # Return the image file
@@ -351,8 +381,10 @@ def combined_plot():
             price_table.loc[i, 'Price'] = price_table.loc[i, 'Price'] * 10**(max_digit - price_d)
 
     # plotting sale table
-    my_title = str(stored_item) +" sales graph"
-    sale_table['Qty'].plot(legend = True, label = 'sales-Qty', title = \
+    plt.figure(figsize=(20, 10))  # Set figure size
+
+    my_title = str(stored_item) +" Sales graph"
+    sale_table['Qty'].plot(legend = True, label = 'Sales-Qty', title = \
         my_title, style = '-', linewidth = 2.5, fontsize=15,figsize=(20, 10))
     # naming the x and y axis
     plt.xlabel('Year', fontsize=15)
@@ -360,33 +392,39 @@ def combined_plot():
     plt.xticks(sale_table.index,sale_table["Year"].values)
 
     # plotting market table
-    market_table['Qty'].plot(legend = True, label = 'Market-Qty', title = \
-        my_title, style = '-', linewidth = 2.5, fontsize=15,figsize=(20, 10))
-    # naming the x and y axis
-    plt.xlabel('Year', fontsize=15)
-    plt.ylabel('Qty', fontsize=15)
+    if have_mdata:
+        market_table['Qty'].plot(legend = True, label = 'Market-Qty', title = \
+            my_title, style = '-', linewidth = 2.5, fontsize=15,figsize=(20, 10))
+        # naming the x and y axis
+        plt.xlabel('Year', fontsize=15)
+        plt.ylabel('Qty', fontsize=15)
 
     # plotting rate table 
-    rate_table['Qty'].plot(legend = True, label = 'Market-Share-Rate', title = \
-        my_title, style = '-', linewidth = 2.5, fontsize=15,figsize=(20, 10))
-    # naming the x and y axis
-    plt.xlabel('Year', fontsize=15)
-    plt.ylabel('Qty', fontsize=15)
+    if have_mdata:
+        rate_table['Qty'].plot(legend = True, label = 'Market-Share-Rate', title = \
+            my_title, style = '-', linewidth = 2.5, fontsize=15,figsize=(20, 10))
+        # naming the x and y axis
+        plt.xlabel('Year', fontsize=15)
+        plt.ylabel('Qty', fontsize=15)
 
     # plotting price table
-    price_table['Price'].plot(legend = True, label = 'Price(Inverse)', title = \
-        my_title, style = '--', linewidth = 2.5, fontsize=15,figsize=(20, 10), color='red')
-    # naming the x and y axis
-    plt.xlabel('Year', fontsize=15)
-    plt.ylabel('Qty', fontsize=15)
+    if have_pdata:
+        price_table['Price'].plot(legend = True, label = 'Price(Inverse)', title = \
+            my_title, style = '--', linewidth = 2.5, fontsize=15,figsize=(20, 10), color='red')
+        # naming the x and y axis
+        plt.xlabel('Year', fontsize=15)
+        plt.ylabel('Qty', fontsize=15)
 
     if market_table.iloc[len(market_table)-1]['Year'] > sale_table.iloc[len(sale_table)-1]['Year']:
         plt.xticks(market_table.index,market_table["Year"].values)
     else:
         plt.xticks(sale_table.index,sale_table["Year"].values)
+    # Adjust layout
+    plt.tight_layout()
+
     # Save the plot to a BytesIO object
     img = io.BytesIO()
-    plt.savefig(img, format='png')
+    plt.savefig(img, format='png', bbox_inches='tight')
     img.seek(0)
     plt.close()
     # Return the image file

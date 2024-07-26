@@ -1,0 +1,15 @@
+/* Result.css */
+.image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between images */
+    justify-content: center; /* Center the images horizontally */
+    padding: 20px; /* Add padding around the gallery */
+  }
+  
+  .gallery-image {
+    width: 300px; /* Adjust width as needed */
+    height: 200px; /* Set height */
+    object-fit: cover; /* Ensure images cover the container */
+    border-radius: 8px; /* Optional: rounded corners */
+  }

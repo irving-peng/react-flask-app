@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
+import { useNavigate } from 'react-router-dom';
 
 function ItemSelectionForm() {
+  // Use the useHistory hook to get access to the history instance
+  const navigate = useNavigate();
+
   const [inputValue, setInputValue] = useState(''); // State for the input value
   const [items, setItems] = useState([]);
 
@@ -10,14 +14,14 @@ function ItemSelectionForm() {
       try {
         const response = await fetch('/hub_item.csv'); // Path to CSV file in public folder
         const csvData = await response.text();
-        console.log('CSV Data:', csvData); // Log CSV data for debugging
+        //console.log('CSV Data:', csvData); // Log CSV data for debugging
 
         // Parse CSV data using PapaParse
         Papa.parse(csvData, {
           header: true,
           skipEmptyLines: true,
           complete: (results) => {
-            console.log('Parsed Data:', results.data); // Log parsed data for debugging
+            //console.log('Parsed Data:', results.data); // Log parsed data for debugging
             const parsedItems = results.data.map((row) => row.itemName);
             setItems(parsedItems);
           },
@@ -52,6 +56,7 @@ function ItemSelectionForm() {
           if (data.status === 'success') {
             console.log('Item submitted successfully:', data.item);
             alert('Item selected successfully!');
+            navigate('/result'); //navigate to result page
           } else {
             console.error('Submission error:', data.message);
           }
