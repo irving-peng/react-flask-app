@@ -16,7 +16,7 @@ For Deployment to Heroku:
     5. rm -Force .git (in react-directory)
     6. git add .
     7. git commit
-    8. git push heroku master
+    8. git push heroku master(main)
 
     (For the first time)
     1*. change the proxy in package,json to the url for the heroku webiste
