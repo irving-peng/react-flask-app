@@ -1,15 +1,56 @@
-/* Result.css */
 .image-gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Space between images */
-    justify-content: center; /* Center the images horizontally */
-    padding: 20px; /* Add padding around the gallery */
-  }
-  
-  .gallery-image {
-    width: 300px; /* Adjust width as needed */
-    height: 200px; /* Set height */
-    object-fit: cover; /* Ensure images cover the container */
-    border-radius: 8px; /* Optional: rounded corners */
-  }
+  text-align: center;
+  margin: 20px;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin: 10px 0;
+  display: inline-block; /* Allows for alignment with buttons */
+}
+
+.button-container {
+  display: flex;
+  justify-content: center; /* Centers the buttons horizontally */
+  margin: 10px 0;
+}
+
+.result-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  margin: 0 5px; /* Adds space between buttons */
+}
+
+.result-button:hover {
+  background-color: #0056b3;
+}
+
+.adjusted-info {
+  margin: 20px 0;
+  font-style: italic;
+  color: #555;
+}
+
+.heading-button-wrapper {
+  display: flex; /* Use Flexbox for horizontal layout */
+  align-items: center; /* Vertically center elements */
+  justify-content: center; /* Align items in the center horizontally */
+  gap: 10px; /* Add spacing between h2 and button */
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  margin: 20px 0;
+}

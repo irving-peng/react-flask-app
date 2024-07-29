@@ -25,6 +25,9 @@ rate_table = None
 # used to check if data is avaliable for market
 have_mdata = True
 have_pdata = True
+# use for knowing the highest power
+high_power = 0
+adjust_graph = []
 @app.route('/api', methods=['GET'])
 @cross_origin()
 def index():
@@ -38,6 +41,15 @@ def serve():
     return send_from_directory(app.static_folder, 'index.html')
     #return "hello world"
 
+@app.route('/adjustment', methods=['GET'])
+def adjustment():
+    global high_power
+    global adjust_graph
+    result = ', '.join([str(item) for item in adjust_graph])
+    print("result, ", result)
+    return jsonify({'high_power': high_power, 'adjust_graph': str(result)})
+
+
 @app.route('/submit-item', methods=['POST'])
 def submit_item():
     global stored_item
@@ -47,8 +59,11 @@ def submit_item():
     global rate_table
     global have_mdata
     global have_pdata
+    global adjust_graph
     data = request.get_json()
     item = data.get('item')
+    adjust_graph = []
+    
     # Process the item as needed
     stored_item = item
     print(f"Received item: {item}")
@@ -200,8 +215,8 @@ def plot():
     # Return the image file
     return send_file(img, mimetype='image/png')
 
-@app.route('/sales-plot')
-def sales_plot():
+@app.route('/sale-plot')
+def sale_plot():
     global stored_item
     global sale_table
     if stored_item == None:
@@ -351,6 +366,12 @@ def combined_plot():
     digit_list = [market_d, sale_d, rate_d,price_d]
     max_digit = max(market_d, sale_d, rate_d,price_d)
 
+    global high_power
+    global adjust_graph 
+    
+    high_power = max_digit
+    
+
     # iterrate through digit_list to see which table need adjustment
     adjustment_list =[]
     for i in range(len(digit_list)):
@@ -380,9 +401,12 @@ def combined_plot():
         for i in range(len(price_table)):
             price_table.loc[i, 'Price'] = price_table.loc[i, 'Price'] * 10**(max_digit - price_d)
 
+    # only one row, return no data
+    if len(sale_table) == 1:
+        return send_file('./my-app/public/noData.png', mimetype='image/png')
+    
     # plotting sale table
     plt.figure(figsize=(20, 10))  # Set figure size
-
     my_title = str(stored_item) +" Sales graph"
     sale_table['Qty'].plot(legend = True, label = 'Sales-Qty', title = \
         my_title, style = '-', linewidth = 2.5, fontsize=15,figsize=(20, 10))
@@ -391,6 +415,11 @@ def combined_plot():
     plt.ylabel('Qty', fontsize=15)
     plt.xticks(sale_table.index,sale_table["Year"].values)
 
+    #initialize the adjust_graph
+    
+    if "sale" in adjustment_list:
+        adjust_graph.append("sale")
+
     # plotting market table
     if have_mdata:
         market_table['Qty'].plot(legend = True, label = 'Market-Qty', title = \
@@ -398,6 +427,8 @@ def combined_plot():
         # naming the x and y axis
         plt.xlabel('Year', fontsize=15)
         plt.ylabel('Qty', fontsize=15)
+        if "market" in adjustment_list:
+            adjust_graph.append("market")
 
     # plotting rate table 
     if have_mdata:
@@ -406,6 +437,8 @@ def combined_plot():
         # naming the x and y axis
         plt.xlabel('Year', fontsize=15)
         plt.ylabel('Qty', fontsize=15)
+        if "rate" in adjustment_list:
+            adjust_graph.append("rate")
 
     # plotting price table
     if have_pdata:
@@ -414,7 +447,9 @@ def combined_plot():
         # naming the x and y axis
         plt.xlabel('Year', fontsize=15)
         plt.ylabel('Qty', fontsize=15)
-
+        if "price" in adjustment_list:
+            adjust_graph.append("price")
+ 
     if market_table.iloc[len(market_table)-1]['Year'] > sale_table.iloc[len(sale_table)-1]['Year']:
         plt.xticks(market_table.index,market_table["Year"].values)
     else:
@@ -428,6 +463,7 @@ def combined_plot():
     img.seek(0)
     plt.close()
     # Return the image file
+    
     return send_file(img, mimetype='image/png')
 
     

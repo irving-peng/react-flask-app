@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ItemSelectionForm from './Component/ItemSelectionForm'
 import Home from './Component/Home'
 import Result from './Component/Result'
+import SingleGraph from './Component/SingleGraph';
+
 
 function App() {
   return (
@@ -12,6 +14,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/form" element={<ItemSelectionForm />} />
       <Route path="/result" element={<Result />} />
+      <Route path="/graph/:label" element={<SingleGraph/>} />
       </Routes>
     </Router>
   );

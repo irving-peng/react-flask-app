@@ -55,7 +55,7 @@ function ItemSelectionForm() {
         .then((data) => {
           if (data.status === 'success') {
             console.log('Item submitted successfully:', data.item);
-            alert('Item selected successfully!');
+            // alert('Item selected successfully!');
             navigate('/result'); //navigate to result page
           } else {
             console.error('Submission error:', data.message);
@@ -66,7 +66,7 @@ function ItemSelectionForm() {
         });
     } else {
       // If the input value is not found in the items, show an alert
-      alert('Input value not found in the CSV.');
+      alert('Input item not found in the data base.');
     }
   };
 

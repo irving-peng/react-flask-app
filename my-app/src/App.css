@@ -1,38 +1,116 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* General styling for the home page */
+.Home {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #343a40;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+h2 {
+  font-size: 2em;
+  margin: 20px 0;
+  color: #495057;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 5px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+/* Adjusted margin for the submit button */
+button[type="submit"] {
+  margin-top: 150px; /* Add space above the submit button */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 600px;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+input[type="text"]:focus,
+select:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+label {
+  margin-bottom: 5px;
+  font-size: 1em;
+  color: #6c757d;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px;
+  margin-top: 40px;
+  padding: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.deploy-container {
+  flex: 1;
+  padding: 20px;
+  background-color: #e9ecef;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+.item-selection-form {
+  flex: 1;
+  padding: 20px;
+  background-color: #e9ecef;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
   }
-  to {
-    transform: rotate(360deg);
+
+  .deploy-container,
+  .item-selection-form {
+    margin-right: 0;
+    margin-bottom: 20px;
+    width: 100%;
   }
 }
