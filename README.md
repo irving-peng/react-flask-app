@@ -1,4 +1,10 @@
-# React Set up
+#Flask (backend) Set up
+run app.py 
+```bash
+python app.py
+```
+
+# React (frontend) Set up
 
 ## Build and Run
 
@@ -22,7 +28,7 @@ npm start
 
 
 package, library, and dependencies listed in requirement.txt
-#Creating virtual environment on windows:
+# Creating virtual environment on windows:
 ```bash
 python -m venv venv
 ```
