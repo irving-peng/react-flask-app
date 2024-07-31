@@ -1,12 +1,32 @@
+# React Set up
+## Build and Run
+navigate to my-app directory first
+```bash
+cd my-app
+```
+build command
+```bash
+npm run build
+```
+run command
+```
+npm start
+```
+
+
 package, library, and dependencies listed in requirement.txt
-
-For creating virtual environment on windows:
-    python -m venv venv
-For activate virtual environment:
-    venv/Scripts/activate
-For deactivate:
-    deactivate
-
+#Creating virtual environment on windows:
+```bash
+python -m venv venv
+```
+For activate virtual environment
+```bash
+venv/Scripts/activate
+```
+For deactivate
+```bash
+deactivate
+```
 
 For Deployment to Heroku:
     1. heroku login
