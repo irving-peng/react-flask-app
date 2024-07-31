@@ -1,14 +1,21 @@
 # React Set up
+
 ## Build and Run
+
 navigate to my-app directory first
+
 ```bash
 cd my-app
 ```
+
 build command
+
 ```bash
 npm run build
 ```
+
 run command
+
 ```
 npm start
 ```
