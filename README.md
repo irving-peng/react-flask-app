@@ -26,8 +26,6 @@ run command
 npm start
 ```
 
-
-package, library, and dependencies listed in requirement.txt
 # Creating virtual environment on windows:
 ```bash
 python -m venv venv
@@ -41,8 +39,11 @@ For deactivate
 deactivate
 ```
 
-For Deployment to Heroku:
-    1. heroku login
+# For Deployment to Heroku:
+    
+    1. ```bash
+    heroku login
+    ```
     2. git init
     3. heroku create
     4. git status
@@ -56,3 +57,5 @@ For Deployment to Heroku:
     2* repeat the commit and push process
 
     view webiste with the URL shown in the output from heroku
+
+    *package, library, and dependencies listed in requirement.txt
