@@ -1,4 +1,4 @@
-#Flask (backend) Set up
+# Flask (backend) Set up
 run app.py 
 ```bash
 python app.py
