@@ -12,13 +12,13 @@ git clone https://github.com/irving-peng/react-flask-app.git
 ```
 ## Python and pip libaries
 install python3 or higher on this [website](https://www.python.org/downloads/windows/)
-install needed package for this app through pip
+install the needed package for this app through pip
 ```bash
 pip install flask flask_cors matplotlib pandas
 ```
 ## Install React and required libraries
 first, download node.js by visiting this [link](https://nodejs.org/en/)
-first, navigate to the react directory
+navigate to the React directory
 ```bash
 cd my-app
 ```
@@ -28,7 +28,7 @@ npm install
 ```
 # Running the App
 ## Flask (backend) Set up
-cd to root directory (if you are in my-app directory)
+cd to the root directory (if you are in my-app directory)
 ```bash
 cd ..
 ```
@@ -57,6 +57,7 @@ run command
 ```
 npm start
 ```
+Now, you should be able to see the app running on [http://localhost:3000/] !
 
 # Creating virtual environment on windows:
 ```bash
@@ -72,37 +73,36 @@ deactivate
 ```
 
 # For Deployment to Heroku:
-    
-    ```bash
-    heroku login
-    ```
-    ```bash
-    git init
-    ```
-    ```bash
-    heroku create
-    ```
-    ```bash
-    git status
-    ```
-    ```bash
-    rm -Force .git (in react-directory)
-    ```
-    ```bash
-    git add .
-    ```
-    ```bash
-    git commit
-    ```
-    ```bash
-    git push heroku master(main)
-    ```
+ ```bash
+ heroku login
+ ```
+```bash
+git init
+```
+```bash
+heroku create
+```
+```bash
+git status
+```
+```bash
+rm -Force .git (in react-directory)
+```
+```bash
+git add .
+```
+```bash
+git commit
+```
+```bash
+git push heroku master(main)
+```
 
-    # For the first time    
-    1. change the proxy in package,json to the url for the heroku webiste
-    2. repeat the commit and push process
+# For the first time    
+1. change the proxy in package,json to the url for the heroku webiste
+2. repeat the commit and push process
 
 
-    *view website with the URL shown in the output from Heroku
+*view website with the URL shown in the output from Heroku
 
-    *package, library, and dependencies listed in requirement.txt
+*package, library, and dependencies listed in requirement.txt
