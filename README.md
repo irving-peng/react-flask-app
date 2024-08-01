@@ -86,7 +86,7 @@ cd my-app/public
 
 *sell_table* : This CSV is used for generating the sales table
 
-# For adding data
+## For adding data
 Simply download the CSV file from the repository, and add rows to the CSV **with the same format** (*E.g.* Date, ItemID, Quantity).
 
 After adding rows to the CSV, replace the existing CSV with the updated CSV file. **DO NOT CHANGE THE NAME OF THE CSV FILE**.
