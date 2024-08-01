@@ -15,11 +15,13 @@ git clone https://github.com/irving-peng/react-flask-app.git
 install python3 or higher on this [website](https://www.python.org/downloads/windows/)
 
 and install the needed package for this app through pip
+
 ```bash
 pip install flask
 ```
 ```bash
-pip install flask_cors 
+pip install flask_cors
+```
 ```bash
 pip install matplotlib
 ```
