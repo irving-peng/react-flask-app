@@ -1,5 +1,16 @@
 # Installation needed
 ## Git
+install git by running this command in your terminal
+```bash
+winget install --id Git.Git -e --source winget
+```
+or visit the website
+[title](https://git-scm.com/download/win)
+then, clone this repository to your local directory 
+```bash
+git clone https://github.com/irving-peng/react-flask-app.git
+```
+
 
 # Flask (backend) Set up
 run app.py 
