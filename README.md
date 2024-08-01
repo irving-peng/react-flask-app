@@ -26,22 +26,22 @@ install npm
 ```
 npm install
 ```
-
-
-
-
-# Flask (backend) Set up
+# Running the App
+## Flask (backend) Set up
+cd to root directory (if you are in my-app directory)
+```bash
+cd ..
+```
 run app.py 
 ```bash
 python app.py
 ```
 
-# React (frontend) Set up
+## React (frontend) Set up
 
 ## Build and Run
 
 navigate to my-app directory first
-
 ```bash
 cd my-app
 ```
