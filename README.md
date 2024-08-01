@@ -1,3 +1,6 @@
+# Installation needed
+## Git
+
 # Flask (backend) Set up
 run app.py 
 ```bash
