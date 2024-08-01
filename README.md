@@ -4,8 +4,7 @@ install git by running this command in your terminal
 ```bash
 winget install --id Git.Git -e --source winget
 ```
-or visit the website
-[title](https://git-scm.com/download/win)
+or visit the this [link](https://git-scm.com/download/win)
 then, clone this repository to your local directory 
 ```bash
 git clone https://github.com/irving-peng/react-flask-app.git
@@ -14,7 +13,15 @@ git clone https://github.com/irving-peng/react-flask-app.git
 install python3 or higher on this [website](https://www.python.org/downloads/windows/)
 install the needed package for this app through pip
 ```bash
-pip install flask flask_cors matplotlib pandas
+pip install flask
+```
+```bash
+pip install flask_cors 
+```bash
+pip install matplotlib
+```
+```bash
+pip install pandas
 ```
 ## Install React and required libraries
 first, download node.js by visiting this [link](https://nodejs.org/en/)
@@ -27,6 +34,7 @@ install npm
 npm install
 ```
 # Running the App
+Running the app required running both the front end and the backend
 ## Flask (backend) Set up
 cd to the root directory (if you are in my-app directory)
 ```bash
@@ -36,10 +44,9 @@ run app.py
 ```bash
 python app.py
 ```
-
+leave the app.py running
 ## React (frontend) Set up
-
-## Build and Run
+open another terminal window and follow these steps
 
 navigate to my-app directory first
 ```bash
@@ -58,7 +65,8 @@ run command
 npm start
 ```
 Now, you should be able to see the app running on [http://localhost:3000/](http://localhost:3000/) !
-Above are all the steps you need to take to run the app locally. 
+
+*Above are all the steps you need to take to run the app locally. 
 
 # Creating virtual environment on windows:
 ```bash
