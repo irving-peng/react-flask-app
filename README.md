@@ -1,10 +1,12 @@
 # Installation needed(required to run the app)
 ## Git
-install git by running this command in your terminal
+
+install git by running this command in your terminal 
 ```bash
 winget install --id Git.Git -e --source winget
 ```
-or visit the this [link](https://git-scm.com/download/win)
+you can also visit this [link](https://git-scm.com/download/win) for installation
+
 then, clone this repository to your local directory 
 ```bash
 git clone https://github.com/irving-peng/react-flask-app.git
