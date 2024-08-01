@@ -52,7 +52,7 @@ python app.py
 ```
 leave the app.py running
 ## React (frontend) Set up
-open another terminal window and follow these steps
+open another terminal window and follow these steps:
 
 navigate to my-app directory first
 ```bash
@@ -113,11 +113,13 @@ git commit
 git push heroku master(main)
 ```
 
-# For the first time    
-1. change the proxy in package,json to the url for the heroku webiste
+## For first time deploying:   
+1. change the proxy in package.json to the URL for the Heroku app
 2. repeat the commit and push process
 
 
-*view website with the URL shown in the output from Heroku
-
-*package, library, and dependencies listed in requirement.txt
+*view the URL shown in the output from
+```bash
+git push heroku master(main)
+```
+*packages, libraries, and dependencies are listed in requirement.txt
