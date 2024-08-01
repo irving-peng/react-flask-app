@@ -73,6 +73,22 @@ npm start
 Now, you should be able to see the app running on [http://localhost:3000/](http://localhost:3000/) 🎉
 
 *Above are all the steps you need to take to run the app locally. 
+## Uploading new data
+for uploading new data or updating existing data, go to the public folder
+```bash
+cd my-app/public
+```
+data.csv: This CSV is used for generating the market demand plot
+
+hub_item.csv: This CSV is used for generating all the items number in the form on Home page
+
+sale_price.csv: this CSV is used for generating the price table
+
+sell_table: this CSV is used for generating the sales table
+
+*For adding data, simply download the CSV file from the repository, and add rows to the CSV **with the same format** (E.g. Date, ItemID, Quantity)
+
+*After adding rows to the CSV, replace the existing CSV with the updated CSV file. **DO NOT CHANGE THE NAME OF THE CSV FILE**
 
 # Creating virtual environment on windows:
 ```bash
