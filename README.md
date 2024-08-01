@@ -78,16 +78,16 @@ for uploading new data or updating existing data, go to the public folder
 ```bash
 cd my-app/public
 ```
-*data.csv*: This CSV is used for generating the market demand plot
+*data.csv* : This CSV is used for generating the market demand plot
 
-*hub_item.csv*: This CSV is used for generating all the items number in the form on Home page
+*hub_item.csv* : This CSV is used for generating all the items number in the form on Home page
 
-*sale_price.csv*: this CSV is used for generating the price table
+*sale_price.csv* : This CSV is used for generating the price table
 
-*sell_table*: this CSV is used for generating the sales table
+*sell_table* : This CSV is used for generating the sales table
 
 # For adding data
-Simply download the CSV file from the repository, and add rows to the CSV **with the same format** (E.g. Date, ItemID, Quantity).
+Simply download the CSV file from the repository, and add rows to the CSV **with the same format** (*E.g.* Date, ItemID, Quantity).
 
 After adding rows to the CSV, replace the existing CSV with the updated CSV file. **DO NOT CHANGE THE NAME OF THE CSV FILE**.
 
