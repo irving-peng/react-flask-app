@@ -1,4 +1,4 @@
-# Installation needed
+# Installation needed(required to run the app)
 ## Git
 install git by running this command in your terminal
 ```bash
@@ -58,6 +58,7 @@ run command
 npm start
 ```
 Now, you should be able to see the app running on [http://localhost:3000/](http://localhost:3000/) !
+Above are all the steps you need to take to run the app locally. 
 
 # Creating virtual environment on windows:
 ```bash
