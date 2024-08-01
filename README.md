@@ -57,7 +57,7 @@ run command
 ```
 npm start
 ```
-Now, you should be able to see the app running on [http://localhost:3000/] !
+Now, you should be able to see the app running on [http://localhost:3000/](http://localhost:3000/) !
 
 # Creating virtual environment on windows:
 ```bash
