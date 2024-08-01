@@ -328,6 +328,10 @@ def combined_plot():
     global market_table
     global price_table
     global rate_table
+    sale_tablec = sale_table.copy()
+    market_tablec = market_table.copy()
+    price_tablec = price_table.copy()
+    rate_tablec = rate_table.copy()
     global have_mdata
     # adjust all four of the table to make them appear on a scale 1-10
     m_t = 0
@@ -390,16 +394,16 @@ def combined_plot():
                 adjustment_list.append("price")
     if "market" in adjustment_list:
         for i in range(len(market_table)):
-            market_table.loc[i, 'Qty'] = market_table.loc[i, 'Qty'] * 10**(max_digit - market_d)
+            market_tablec.loc[i, 'Qty'] = market_table.loc[i, 'Qty'] * 10**(max_digit - market_d)
     if "sale" in adjustment_list:
         for i in range(len(sale_table)):
-            sale_table.loc[i, 'Qty'] = sale_table.loc[i, 'Qty'] * 10**(max_digit - sale_d)
+            sale_tablec.loc[i, 'Qty'] = sale_table.loc[i, 'Qty'] * 10**(max_digit - sale_d)
     if "rate" in adjustment_list:
         for i in range(len(rate_table)):
-            rate_table.loc[i, 'Qty'] = rate_table.loc[i, 'Qty'] * 10**(max_digit - rate_d)   
+            rate_tablec.loc[i, 'Qty'] = rate_table.loc[i, 'Qty'] * 10**(max_digit - rate_d)   
     if "price" in adjustment_list:
         for i in range(len(price_table)):
-            price_table.loc[i, 'Price'] = price_table.loc[i, 'Price'] * 10**(max_digit - price_d)
+            price_tablec.loc[i, 'Price'] = price_table.loc[i, 'Price'] * 10**(max_digit - price_d)
 
     # only one row, return no data
     if len(sale_table) == 1:
@@ -408,21 +412,22 @@ def combined_plot():
     # plotting sale table
     plt.figure(figsize=(20, 10))  # Set figure size
     my_title = str(stored_item) +" Sales graph"
-    sale_table['Qty'].plot(legend = True, label = 'Sales-Qty', title = \
+    sale_tablec['Qty'].plot(legend = True, label = 'Sales-Qty', title = \
         my_title, style = '-', linewidth = 2.5, fontsize=15,figsize=(20, 10))
     # naming the x and y axis
     plt.xlabel('Year', fontsize=15)
     plt.ylabel('Qty', fontsize=15)
-    plt.xticks(sale_table.index,sale_table["Year"].values)
+    plt.xticks(sale_tablec.index,sale_tablec["Year"].values)
 
     #initialize the adjust_graph
+    adjust_graph = []
     
     if "sale" in adjustment_list:
         adjust_graph.append("sale")
 
     # plotting market table
     if have_mdata:
-        market_table['Qty'].plot(legend = True, label = 'Market-Qty', title = \
+        market_tablec['Qty'].plot(legend = True, label = 'Market-Qty', title = \
             my_title, style = '-', linewidth = 2.5, fontsize=15,figsize=(20, 10))
         # naming the x and y axis
         plt.xlabel('Year', fontsize=15)
@@ -432,7 +437,7 @@ def combined_plot():
 
     # plotting rate table 
     if have_mdata:
-        rate_table['Qty'].plot(legend = True, label = 'Market-Share-Rate', title = \
+        rate_tablec['Qty'].plot(legend = True, label = 'Market-Share-Rate', title = \
             my_title, style = '-', linewidth = 2.5, fontsize=15,figsize=(20, 10))
         # naming the x and y axis
         plt.xlabel('Year', fontsize=15)
@@ -442,7 +447,7 @@ def combined_plot():
 
     # plotting price table
     if have_pdata:
-        price_table['Price'].plot(legend = True, label = 'Price(Inverse)', title = \
+        price_tablec['Price'].plot(legend = True, label = 'Price(Inverse)', title = \
             my_title, style = '--', linewidth = 2.5, fontsize=15,figsize=(20, 10), color='red')
         # naming the x and y axis
         plt.xlabel('Year', fontsize=15)
@@ -450,10 +455,10 @@ def combined_plot():
         if "price" in adjustment_list:
             adjust_graph.append("price")
  
-    if market_table.iloc[len(market_table)-1]['Year'] > sale_table.iloc[len(sale_table)-1]['Year']:
-        plt.xticks(market_table.index,market_table["Year"].values)
+    if market_tablec.iloc[len(market_tablec)-1]['Year'] > sale_tablec.iloc[len(sale_tablec)-1]['Year']:
+        plt.xticks(market_tablec.index,market_tablec["Year"].values)
     else:
-        plt.xticks(sale_table.index,sale_table["Year"].values)
+        plt.xticks(sale_tablec.index,sale_tablec["Year"].values)
     # Adjust layout
     plt.tight_layout()
 
