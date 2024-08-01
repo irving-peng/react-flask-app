@@ -30,7 +30,8 @@ pip install pandas
 ```
 ## Install React and required libraries
 first, download node.js by visiting this [link](https://nodejs.org/en/)
-navigate to the React directory
+
+then, navigate to the React directory
 ```bash
 cd my-app
 ```
