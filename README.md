@@ -10,6 +10,24 @@ then, clone this repository to your local directory
 ```bash
 git clone https://github.com/irving-peng/react-flask-app.git
 ```
+## Python and pip libaries
+install python3 or higher on this [website](https://www.python.org/downloads/windows/)
+install needed package for this app through pip
+```bash
+pip install flask flask_cors matplotlib pandas
+```
+## Install React and required libraries
+first, download node.js by visiting this [link](https://nodejs.org/en/)
+first, navigate to the react directory
+```bash
+cd my-app
+```
+install npm
+```
+npm install
+```
+
+
 
 
 # Flask (backend) Set up
